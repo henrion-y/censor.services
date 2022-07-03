@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "./;censorPb";
+
+enum RET_CODE{
+  SUCCESS = 0;
+  ERROR = 1;
+  INVALID_PARAM = 2;
+  UID_TOO_MANY = 3;
+  REDIS_ERR = 4;
+}
+
+service CensorGrpcService {
+  rpc CensorText(CensorTextRequest)returns(CensorResultResponse){}
+  rpc CensorImage(CensorImageRequest)returns(CensorResultResponse){}
+}
+
+message CensorTextRequest{
+  string text = 1;
+}
+
+message CensorImageRequest{
+  string image = 1;
+}
+
+message CensorResultResponse{
+  RET_CODE code = 1;
+  string message = 2;
+  CensorResult data = 3;
+}
+
+message CensorResult{
+  string censor_content = 1;
+  int32 censor_type = 2;
+  string suggestion = 3;
+  bool intercept_status = 4;
+  repeated ReviewLabel review_label = 5;
+}
+
+message ReviewLabel{
+  string review_content = 1;
+  string label = 2;
+  double rate = 3;
+}

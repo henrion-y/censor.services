@@ -1,0 +1,114 @@
+{
+    "schemes": [
+        "http"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "censor.services API接口文档",
+        "title": "censor.services",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.swagger.io/support"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "2.0"
+    },
+    "host": "127.0.0.1:8085",
+    "basePath": "/api/v1/censor",
+    "paths": {
+        "/censors/censor_image": {
+            "post": {
+                "description": "图片审核",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "内容审核"
+                ],
+                "summary": "图片审核",
+                "operationId": "CensorImage",
+                "parameters": [
+                    {
+                        "description": "图片审核",
+                        "name": "CensorImageDto",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.CensorImageDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.ResponseData"
+                        }
+                    }
+                }
+            }
+        },
+        "/censors/censor_text": {
+            "post": {
+                "description": "文本审核",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "内容审核"
+                ],
+                "summary": "文本审核",
+                "operationId": "CensorText",
+                "parameters": [
+                    {
+                        "description": "文本审核",
+                        "name": "CensorTextDto",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.CensorTextDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.ResponseData"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "controllers.ResponseData": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {}
+            }
+        },
+        "dtos.CensorImageDto": {
+            "type": "object",
+            "properties": {
+                "image_url": {
+                    "type": "string"
+                }
+            }
+        },
+        "dtos.CensorTextDto": {
+            "type": "object",
+            "properties": {
+                "text": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

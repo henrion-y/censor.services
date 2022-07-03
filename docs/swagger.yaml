@@ -1,0 +1,75 @@
+basePath: /api/v1/censor
+definitions:
+  controllers.ResponseData:
+    properties:
+      code:
+        type: integer
+      data: {}
+    type: object
+  dtos.CensorImageDto:
+    properties:
+      image_url:
+        type: string
+    type: object
+  dtos.CensorTextDto:
+    properties:
+      text:
+        type: string
+    type: object
+host: 127.0.0.1:8085
+info:
+  contact:
+    name: API Support
+    url: http://www.swagger.io/support
+  description: censor.services API接口文档
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: censor.services
+  version: "2.0"
+paths:
+  /censors/censor_image:
+    post:
+      description: 图片审核
+      operationId: CensorImage
+      parameters:
+      - description: 图片审核
+        in: body
+        name: CensorImageDto
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CensorImageDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.ResponseData'
+      summary: 图片审核
+      tags:
+      - 内容审核
+  /censors/censor_text:
+    post:
+      description: 文本审核
+      operationId: CensorText
+      parameters:
+      - description: 文本审核
+        in: body
+        name: CensorTextDto
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CensorTextDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.ResponseData'
+      summary: 文本审核
+      tags:
+      - 内容审核
+schemes:
+- http
+swagger: "2.0"
