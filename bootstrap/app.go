@@ -12,7 +12,6 @@ import (
 	"github.com/henrion-y/base.services/database/mongo"
 	middlewares2 "github.com/henrion-y/base.services/http/gin/middlewares"
 	"github.com/henrion-y/base.services/infra/censor/baiduCensor"
-	"github.com/henrion-y/base.services/infra/jwt"
 	"go.uber.org/fx"
 )
 
@@ -28,7 +27,6 @@ func App() *fx.App {
 		fx.Provide(providers.NewLoggerProvider),
 
 		fx.Provide(baiduCensor.NewBaiduCensorClient),
-		fx.Provide(jwt.NewJWTService),
 
 		// Providers (db)
 		fx.Provide(mongo.NewDbProvider),
