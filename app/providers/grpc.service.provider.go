@@ -1,12 +1,14 @@
 package providers
 
 import (
-	censorPb "censor.services/app/domain/proto"
 	"context"
 	"fmt"
-	"google.golang.org/grpc"
 	"log"
 	"net"
+
+	censorPb "censor.services/app/domain/proto"
+
+	"google.golang.org/grpc"
 
 	"github.com/spf13/viper"
 

@@ -1,12 +1,14 @@
 package grpc
 
 import (
-	censorPb "censor.services/app/domain/proto"
 	"context"
 	"fmt"
+	"testing"
+
+	censorPb "censor.services/app/domain/proto"
+
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	"testing"
 )
 
 const LocalGrpcAddr = "127.0.0.1:8087"
@@ -114,7 +116,7 @@ func TestCensorService_CensorText(t *testing.T) {
 
 	本案从事实证据出发，深究《中华人民共和国婚姻法》对于离婚协议效力等问题的相关规定。通过对离婚协议抽丝剥茧的分析，分别从离婚协议是否为真实的意思表示、离婚协议与诉讼的关联性、离婚协议形式、离婚协议内容和离婚协议法律效力五个方面对一审、二审的审判结论进行逐一辩驳，并且尖锐的指出了购房凭证等前两审程序一直忽视的关键证据。理论结合实证，最终推翻了终审判决，使案件结果在再审阶段得以逆转。 | `
 
-	//text = strings.ReplaceAll(text, " ", "")
+	// text = strings.ReplaceAll(text, " ", "")
 	censorTextResult, err := client.CensorText(context.Background(), &censorPb.CensorTextRequest{Text: text})
 	if err != nil {
 		t.Fatal(err)

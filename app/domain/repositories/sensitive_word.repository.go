@@ -2,7 +2,9 @@ package repositories
 
 import (
 	"context"
+
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo/options"
 
 	"censor.services/app/domain/models/mongo_models"
 	"censor.services/pkg/utils"
@@ -11,20 +13,25 @@ import (
 
 type SensitiveWordRepository interface {
 	Create(c context.Context, sensitiveWord *mongo_models.TSensitiveWord) (string, error)
-	FindByRate(c context.Context, rate float64) ([]*mongo_models.TSensitiveWord, error)
+	FindByRate(c context.Context, page int, pageSize int, rate float64) ([]*mongo_models.TSensitiveWord, error)
 }
 
 type sensitiveWordRepository struct {
 	mongoDb *mongo.Database
 }
 
-func (r sensitiveWordRepository) FindByRate(c context.Context, rate float64) ([]*mongo_models.TSensitiveWord, error) {
+func (r sensitiveWordRepository) FindByRate(c context.Context, page int, pageSize int, rate float64) ([]*mongo_models.TSensitiveWord, error) {
 	word := mongo_models.TSensitiveWord{}
 	list := make([]*mongo_models.TSensitiveWord, 0)
 
 	filter := bson.M{"rate": bson.M{"$gte": rate}}
-	cur, err := r.mongoDb.Collection(word.TableName()).
-		Find(c, filter)
+	limit := int64(pageSize)
+	skip := int64((page - 1) * pageSize)
+	findOpt := &options.FindOptions{
+		Limit: &limit,
+		Skip:  &skip,
+	}
+	cur, err := r.mongoDb.Collection(word.TableName()).Find(c, filter, findOpt)
 	if err != nil && err != mongo.ErrNoDocuments {
 		return nil, err
 	}

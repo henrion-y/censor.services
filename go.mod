@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/gin-gonic/gin v1.7.7
-	github.com/henrion-y/base.services v1.0.0
+	github.com/henrion-y/base.services v1.0.1
 	github.com/spf13/viper v1.11.0
 	go.uber.org/dig v1.14.1
 	go.uber.org/fx v1.17.1

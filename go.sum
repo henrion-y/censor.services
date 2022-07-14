@@ -292,6 +292,8 @@ github.com/hashicorp/serf v0.9.6/go.mod h1:TXZNMjZQijwlDvp+r0b63xZ45H7JmCmgg4gpT
 github.com/hashicorp/serf v0.9.7/go.mod h1:TXZNMjZQijwlDvp+r0b63xZ45H7JmCmgg4gpTwn9UV4=
 github.com/henrion-y/base.services v1.0.0 h1:7ari7VFbpZp3U1EBiM0Lnl84lbeD1I2BhM9Lu1VmSz4=
 github.com/henrion-y/base.services v1.0.0/go.mod h1:wSB6NPyaTqQ8Va3EOBudta8gfM/Fb8o2C2+859kJWTo=
+github.com/henrion-y/base.services v1.0.1 h1:S3sIZVEFKNv9HQ4PsF7aVrCNUdVcGDBP70vUkrOsMSs=
+github.com/henrion-y/base.services v1.0.1/go.mod h1:wSB6NPyaTqQ8Va3EOBudta8gfM/Fb8o2C2+859kJWTo=
 github.com/ianlancetaylor/demangle v0.0.0-20181102032728-5e5cf60278f6/go.mod h1:aSSvb/t6k1mPoxDqO4vJh6VOCGPwU4O0C2/Eqndh1Sc=
 github.com/ianlancetaylor/demangle v0.0.0-20200824232613-28f6c0f3b639/go.mod h1:aSSvb/t6k1mPoxDqO4vJh6VOCGPwU4O0C2/Eqndh1Sc=
 github.com/jinzhu/gorm v1.9.16/go.mod h1:G3LB3wezTOWM2ITLzPxEXgSkOXAntiLHS7UdBefADcs=

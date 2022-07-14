@@ -1,10 +1,12 @@
 package grpc
 
 import (
+	"context"
+
 	"censor.services/app/domain/dtos"
 	censorPb "censor.services/app/domain/proto"
 	"censor.services/app/domain/services"
-	"context"
+
 	"github.com/henrion-y/base.services/infra/censor"
 )
 
@@ -34,6 +36,7 @@ func (g *CensorGrpcService) CensorText(c context.Context, censorTextRequest *cen
 	result.Data = toCensorResultResponse(censorResult)
 	return result, nil
 }
+
 func (g *CensorGrpcService) CensorImage(c context.Context, censorImageRequest *censorPb.CensorImageRequest) (*censorPb.CensorResultResponse, error) {
 	result := &censorPb.CensorResultResponse{
 		Code:    censorPb.RET_CODE_SUCCESS,

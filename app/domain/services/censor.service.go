@@ -1,15 +1,17 @@
 package services
 
 import (
+	"context"
+	"fmt"
+	"time"
+
 	"censor.services/app/domain/dtos"
 	"censor.services/app/domain/models/mongo_models"
 	"censor.services/app/domain/repositories"
 	"censor.services/pkg/utils"
-	"context"
-	"fmt"
+
 	ac_automaton "github.com/henrion-y/base.services/infra/ac.automaton"
 	"github.com/henrion-y/base.services/infra/censor"
-	"time"
 )
 
 type CensorService interface {
@@ -51,10 +53,8 @@ func (s *censorService) CensorImage(c context.Context, dto *dtos.CensorImageDto)
 }
 
 func (s *censorService) acAutoMachineAddPattern(censorResult *censor.CensorResult) {
-	var acNeedBuild bool
 	for i := range censorResult.ReviewLabel {
-		s.acAutoMachine.AddPattern(censorResult.ReviewLabel[i].ReviewContent)
-		acNeedBuild = true
+		s.acAutoMachine.AddPatternAndBuild(censorResult.ReviewLabel[i].ReviewContent)
 		sensitiveWord := &mongo_models.TSensitiveWord{
 			ReviewContent: censorResult.ReviewLabel[i].ReviewContent,
 			Label:         censorResult.ReviewLabel[i].Label,
@@ -68,21 +68,34 @@ func (s *censorService) acAutoMachineAddPattern(censorResult *censor.CensorResul
 		}
 	}
 
-	if acNeedBuild {
-		s.acAutoMachine.Build()
-	}
 	return
 }
 
 func (s *censorService) initAcAutoMachine() error {
-	words, err := s.sensitiveWordRepository.FindByRate(context.Background(), 0)
-	if err != nil {
-		return err
+	page := 1
+	for {
+		words, err := s.sensitiveWordRepository.FindByRate(context.Background(), page, 100, 0)
+		if err != nil {
+			return err
+		}
+
+		var patterns []string
+		for i := range words {
+			patterns = append(patterns, words[i].ReviewContent)
+		}
+		err = s.acAutoMachine.LoadPatterns(patterns)
+		if err != nil {
+			return err
+		}
+
+		if len(words) < 100 {
+			break
+		}
+
+		page++
 	}
-	for i := range words {
-		s.acAutoMachine.AddPattern(words[i].ReviewContent)
-	}
-	s.acAutoMachine.Build()
+
+	s.acAutoMachine.StopLoad()
 	return nil
 }
 
